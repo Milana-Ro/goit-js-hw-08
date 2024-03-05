@@ -85,6 +85,20 @@ const galleryItemsMarkup = images.reduce((acc, element) => {
   `;
   return acc;
 }, "");
+
 galleryContainer.insertAdjacentHTML("afterbegin", galleryItemsMarkup);
 
-console.log(galleryContainer);
+galleryContainer.addEventListener("click", onImageClick);
+
+function onImageClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+
+  const instance = basicLightbox.create(`
+  <img src="${event.target.dataset.source}" alt="${event.target.alt}">
+  `);
+
+  instance.show();
+}
